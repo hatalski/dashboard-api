@@ -1,5 +1,5 @@
 import { Container, ContainerModule, interfaces } from 'inversify';
-import App from './app';
+import { App } from './app';
 import { IExceptionFilter } from './errors/exception.filter.interface';
 import { ExceptionFilter } from './errors/exception.filter';
 import { ILoggerService } from './logger/logger.interface';
@@ -26,10 +26,18 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<App>(TYPES.Application).to(App);
 });
 
-const appContainer = new Container();
-appContainer.load(appBindings);
+interface IBootstrapReturn {
+	app: App;
+	appContainer: Container;
+}
 
-const app = appContainer.get<App>(TYPES.Application);
-app.init();
+async function bootstrap(): Promise<IBootstrapReturn> {
+	const appContainer = new Container();
+	appContainer.load(appBindings);
 
-export { app, appContainer };
+	const app = appContainer.get<App>(TYPES.Application);
+	await app.init();
+	return { app, appContainer };
+}
+
+export const boot = bootstrap();

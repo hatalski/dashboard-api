@@ -12,10 +12,10 @@ import { PrismaService } from './database/prisma.service';
 import { AuthMiddleware } from './common/auth.middleware';
 
 @injectable()
-export default class App {
-	private _app: Express;
-	private _server: Server;
-	private _port: number;
+export class App {
+	_app: Express;
+	_server: Server;
+	_port: number;
 
 	constructor(
 		@inject(TYPES.ILoggerService) private logger: ILoggerService,
@@ -59,5 +59,9 @@ export default class App {
 		this._server = this._app.listen(this._port, () => {
 			this.logger.log(`Server started as http://localhost:${this._port}`);
 		});
+	}
+
+	public close(): void {
+		this._server.close();
 	}
 }

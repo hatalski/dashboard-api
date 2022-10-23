@@ -1,11 +1,11 @@
-import { BaseController } from '../common/base.controller.js';
+import { BaseController } from '../common/base.controller';
 import { Request, Response, NextFunction } from 'express';
-import { HttpError } from '../errors/http-error.class.js';
+import { HttpError } from '../errors/http-error.class';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../types.js';
-import { ILoggerService } from '../logger/logger.interface.js';
+import { TYPES } from '../types';
+import { ILoggerService } from '../logger/logger.interface';
 import 'reflect-metadata';
-import { IUserController } from './user.interface.js';
+import { IUserController } from './user.interface';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {

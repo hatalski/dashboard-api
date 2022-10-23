@@ -17,7 +17,7 @@ function Logger(): Function {
 function Method(target: Object, propertyKey: string, propertyDescriptor: PropertyDescriptor): void {
 	console.log(propertyKey);
 	//const oldValue = propertyDescriptor.value;
-	propertyDescriptor.value = function (...args: any[]) {
+	propertyDescriptor.value = function (...args: number[]): number {
 		return args[0] * 10;
 	};
 }
